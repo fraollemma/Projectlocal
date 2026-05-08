@@ -1,0 +1,104 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Create Poultry Item | Ethiopian Sheger Market" %}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'poultryfarm/css/item_create.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="item-create-wrapper">
+
+    <div class="item-form-container">
+
+        <!-- HEADER -->
+        <div class="form-header">
+            <h1 class="item-form-title">🐔 {% trans "Create New Item" %}</h1>
+            <p class="form-subtitle">
+                {% trans "Add your poultry product with images and details" %}
+            </p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" id="itemForm">
+            {% csrf_token %}
+
+            <!-- MAIN IMAGE -->
+            <div class="form-section">
+                <h3 class="section-title">🖼️ {% trans "Main Image" %}</h3>
+
+                <div class="upload-box">
+                    {{ form.main_image }}
+                    <label for="id_main_image">
+                        <span>📤 {% trans "Click or drag image" %}</span>
+                        <small>PNG, JPG (max 5MB)</small>
+                    </label>
+                </div>
+
+                <img id="mainImagePreview" class="main-preview-image" />
+
+                {% for error in form.main_image.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- BASIC INFO -->
+            <div class="form-section">
+                <h3 class="section-title">📦 {% trans "Basic Information" %}</h3>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        {{ form.name.label_tag }}
+                        {{ form.name }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.price.label_tag }}
+                        {{ form.price }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="form-section">
+                <h3 class="section-title">📝 {% trans "Description" %}</h3>
+
+                <div class="form-group">
+                    {{ form.description }}
+                    <div class="char-counter">0 characters</div>
+                </div>
+            </div>
+
+            <!-- SUB IMAGES -->
+            <div class="form-section">
+                <h3 class="section-title">📷 {% trans "More Images" %}</h3>
+
+                <div class="upload-box multi-upload">
+                    {{ form.sub_images }}
+                    <label for="id_sub_images">
+                        <span>➕ {% trans "Upload additional images" %}</span>
+                        <small>{% trans "You can select multiple files" %}</small>
+                    </label>
+                </div>
+
+                <div id="imagePreview" class="preview-container"></div>
+            </div>
+
+            <!-- ACTION -->
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">
+                    🚀 {% trans "Publish Item" %}
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'poultryfarm/js/item_create.js' %}"></script>
+{% endblock %}

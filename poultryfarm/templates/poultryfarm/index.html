@@ -1,0 +1,361 @@
+<!-- poultryfarm/templates/poultryfarm/index.html -->
+{% extends 'base/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+    {% trans " Poultry | Ethiopian Sheger Market place" %}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'poultryfarm/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="index-hero">
+
+    <video autoplay muted loop playsinline class="index-hero__video">
+        <source src="{% static 'poultryfarm/videos/chicken-farm.mp4' %}" type="video/mp4">
+    </video>
+
+    <div class="index-hero__overlay"></div>
+    
+    <div class="index-hero__content index-container">
+
+        <h1 class="index-hero__title">
+            {% trans "Premium Poultry Marketplace" %}
+        </h1>
+
+        <p class="index-hero__description">
+            {% trans "Buy chickens, eggs, and poultry products from trusted Ethiopian farmers." %}
+        </p>
+
+        <div class="index-hero__buttons">
+            <a href="#services" class="index-button index-button--primary">
+                {% trans "Explore More →" %}
+            </a>
+
+            <a href="{% url 'poultryfarm:item_list' %}" class="index-button index-button--secondary">
+                {% trans "Browse Items →" %}
+            </a>
+        </div>
+    </div>
+
+    <div class="index-hero__scroll">
+        <span></span>
+        <p>Scroll Down</p>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section class="index-services index-container" id="services">
+
+    <div class="index-section-header">
+        <span>OUR SERVICES</span>
+        <h2>What We Offer</h2>
+        <p>We connect you with quality poultry products and services from trusted farmers across Ethiopia.</p>
+    </div>
+
+    <div class="index-services__grid">
+
+        <article class="index-service-card">
+            <img src="{% static 'poultryfarm/images/chicken-meat.jpg' %}">
+            <div class="index-service-icon-badge icon-poultry-items"><i class="fas fa-drumstick-bite"></i></div>
+            <div class="index-service-card__content">
+                <h3>Poultry Items</h3>
+                <p>Healthy, antibiotic-free chicken meat processed under the highest hygiene standards.</p>
+                <a href="{% url 'poultryfarm:item_list' %}">View More →</a>
+            </div>
+        </article>
+
+        <article class="index-service-card">
+            <img src="{% static 'poultryfarm/images/eggs.jpg' %}">
+            <div class="index-service-icon-badge icon-fresh-eggs"><i class="fas fa-egg"></i></div>
+            <div class="index-service-card__content">
+                <h3>Fresh Eggs Supply</h3>
+                <p>We provide farm-fresh eggs daily from our free-range chickens.</p>
+                <a href="{% url 'poultryfarm:egg_sellers' %}">View More →</a>
+            </div>
+        </article>
+
+        <article class="index-service-card">
+            <img src="{% static 'poultryfarm/images/hatchery.jpg' %}">
+            <div class="index-service-icon-badge icon-poultry-chickens"><i class="fas fa-dove"></i></div>
+            <div class="index-service-card__content">
+                <h3>Poultry Chickens</h3>
+                <p>High-quality vaccinated chicks from top breeds.</p>
+                <a href="{% url 'poultryfarm:chicken_sellers_list' %}">View More →</a>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<!-- TRAINING -->
+<section class="index-training-section">
+
+    <div class="index-container">
+
+        <div class="index-section-header">
+            <span>EXPERT SERVICES</span>
+            <h2>Training & Consultancy</h2>
+            <p>Empowering your poultry farming success with knowledge and expertise</p>
+        </div>
+
+        <div class="index-training-cards">
+
+            <!-- TRAINING -->
+            <div class="index-training-card">
+                <img src="{% static 'poultryfarm/images/training.jpg' %}">
+                <div class="index-training-card__content">
+                    <h3>Poultry Farming Training</h3>
+                <div class="expert-service-badge badge-training"><i class="fas fa-graduation-cap"></i></div>
+                
+                    <ul>
+                        <li>Modern farming techniques</li>
+                        <li>Best practices</li>
+                        <li>Hands-on experience</li>
+                        <li>Disease control</li>
+                        <li>Marketing</li>
+                    </ul>
+                    <a href="{% url 'poultryfarm:poultry_trainings' %}" class="index-button index-button--primary">Enroll Now</a>
+                </div>
+            </div>
+
+            <!-- CONSULTANCY -->
+            <div class="index-training-card">
+                <img src="{% static 'poultryfarm/images/training.jpg' %}">
+                <div class="index-training-card__content">
+                <div class="expert-service-badge badge-consultancy"><i class="fas fa-user-friends"></i></div>
+                    <h3>Poultry Farming Consultancy</h3>
+                    <ul>
+                        <li>Expert guidance</li>
+                        <li>Farm setup</li>
+                        <li>Optimization</li>
+                        <li>Productivity</li>
+                        <li>Health</li>
+                    </ul>
+                    <a href="{% url 'poultryfarm:veterinary_consultancy' %}" class="index-button index-button--secondary">Get Started</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- STATS -->
+<section class="index-stats index-container">
+
+    <h2>Our Poultry Status</h2>
+
+    <div class="index-stats-grid">
+
+        <div class="index-stat">
+            <div class="stat-icon" style="background:#fff1e6; color:#f26522;"><i class="fas fa-shopping-bag"></i></div>
+            <h3>{{ total_products }}</h3>
+            <p>Items</p>
+        </div>
+
+        <div class="index-stat">
+            <div class="stat-icon" style="background:#e0f2f1; color:#008ba3;"><i class="fas fa-egg"></i></div>
+            <h3>{{ total_egg_sellers }}</h3>
+            <p>Egg Sellers</p>
+        </div>
+
+        <div class="index-stat">
+            <div class="stat-icon" style="background:#f1f8e9; color:#7ab53b;"><i class="fas fa-dove"></i></div>
+            <h3>{{ total_chicken_sellers }}</h3>
+            <p>Chicken Sellers</p>
+        </div>
+
+        <div class="index-stat">
+            <div class="stat-icon" style="background:#fffde7; color:#fbc02d;"><i class="fas fa-graduation-cap"></i></div>
+            <h3>{{ total_trainings }}</h3>
+            <p>Trainings</p>
+        </div>
+
+        <div class="index-stat">
+            <div class="stat-icon" style="background:#f3e5f5; color:#9c27b0;"><i class="fas fa-user-friends"></i></div>
+            <h3>{{ total_consultations }}</h3>
+            <p>Consultants</p>
+        </div>
+
+    </div>
+</section>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

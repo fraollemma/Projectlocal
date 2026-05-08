@@ -1,0 +1,41 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'dairyfarm/css/dairyfarm_detail.css' %}">
+
+<div class="detail-container">
+
+    <div class="image-section">
+        {% if product.images.exists %}
+            <img src="{{ product.images.first.image.url }}" class="main-img">
+        {% else %}
+            <img src="{% static 'base/images/default.jpg' %}" class="main-img">
+        {% endif %}
+    </div>
+
+    <div class="info-section">
+
+        <h1>{{ product.name }}</h1>
+
+        <p class="price">ETB {{ product.price }}</p>
+
+        <p class="desc">{{ product.description }}</p>
+
+        <ul class="meta">
+            <li><b>Category:</b> {{ product.category }}</li>
+            <li><b>Available:</b> {{ product.quantity_available }} {{ product.unit }}</li>
+            <li><b>Likes:</b> {{ product.like_count }}</li>
+        </ul>
+
+        <div class="buttons">
+            <a href="{% url 'dairyfarm:order' product.slug %}" class="btn buy">Order Now</a>
+            <a href="{% url 'dairyfarm:dairyfarm_list' %}" class="btn back">Back</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

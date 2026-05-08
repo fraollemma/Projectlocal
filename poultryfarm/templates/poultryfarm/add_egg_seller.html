@@ -1,0 +1,143 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Add New Egg Seller | Ethiopian Sheger Market place" %}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'poultryfarm/css/add_egg_sellers.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-wrapper">
+
+    <h1 class="page-title">
+        <i class="fas fa-plus-circle"></i> {% trans "Add New Egg Seller" %}
+    </h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="form-container">
+
+        <form method="post" class="egg-form">
+            {% csrf_token %}
+
+            <div class="form-grid">
+
+                <!-- ================= FARM INFO ================= -->
+                <div class="form-section">
+                    <h3>{% trans "Farm Information" %}</h3>
+
+                    <label>{% trans "Farm Name" %}</label>
+                    <input type="text" value="{{ request.user.profile.farm_name }}" readonly class="readonly-field">
+
+                    <label>{% trans "Owner Name" %}</label>
+                    <input type="text" value="{{ request.user.username }}" readonly class="readonly-field">
+
+                    <label>{% trans "Description" %}</label>
+                    {{ form.description }}
+                    {{ form.description.errors }}
+                </div>
+
+
+                <!-- ================= LOCATION ================= -->
+                <div class="form-section">
+                    <h3>{% trans "Location" %}</h3>
+
+                    <label>{% trans "City" %}</label>
+                    <input type="text" value="{{ request.user.profile.city }}" readonly class="readonly-field">
+
+                    <label>{% trans "Address" %}</label>
+                    <input type="text" value="{{ request.user.profile.location }}" readonly class="readonly-field">
+                </div>
+
+
+                <!-- ================= EGG DETAILS ================= -->
+                <div class="form-section">
+                    <h3>{% trans "Egg Details" %}</h3>
+
+                    <label>{% trans "Egg Type" %}</label>
+                    {{ form.egg_type }}
+                    {{ form.egg_type.errors }}
+
+                    <label>{% trans "Certification" %}</label>
+                    {{ form.certification }}
+                    {{ form.certification.errors }}
+                </div>
+
+
+                <!-- ================= PRICING ================= -->
+                <div class="form-section">
+                    <h3>{% trans "Pricing & Availability" %}</h3>
+
+                    <label>{% trans "Quantity Available" %}</label>
+                    {{ form.quantity_available }}
+                    {{ form.quantity_available.errors }}
+
+                    <label>{% trans "Price per Dozen ($)" %}</label>
+                    {{ form.price_per_dozen }}
+                    {{ form.price_per_dozen.errors }}
+
+                    <label>{% trans "Minimum Order Quantity" %}</label>
+                    {{ form.min_order_quantity }}
+                    {{ form.min_order_quantity.errors }}
+                </div>
+
+
+                <!-- ================= CONTACT ================= -->
+                <div class="form-section">
+                    <h3>{% trans "Contact Information" %}</h3>
+
+                    <label>{% trans "Phone" %}</label>
+                    <input type="text" value="{{ request.user.phone_number }}" readonly class="readonly-field">
+
+                    <label>{% trans "Email" %}</label>
+                    <input type="email" value="{{ request.user.profile.email|default:'' }}" readonly class="readonly-field">
+
+                    <label>{% trans "Website" %}</label>
+                    <input type="text" value="{{ request.user.profile.website|default:'' }}" readonly class="readonly-field">
+                </div>
+
+
+                <!-- ================= SOCIAL ================= -->
+                <div class="form-section">
+                    <h3>{% trans "Social Media" %}</h3>
+
+                    <label>{% trans "Facebook" %}</label>
+                    <input type="text" value="{{ request.user.profile.facebook|default:'' }}" readonly class="readonly-field">
+
+                    <label>{% trans "Telegram" %}</label>
+                    <input type="text" value="{{ request.user.profile.telegram|default:'' }}" readonly class="readonly-field">
+
+                    <label>{% trans "Instagram" %}</label>
+                    <input type="text" value="{{ request.user.profile.instagram|default:'' }}" readonly class="readonly-field">
+                </div>
+
+            </div>
+
+            <div class="form-buttons">
+                <a href="{% url 'poultryfarm:egg_sellers' %}" class="btn secondary">
+                    {% trans "Back to Sellers" %}
+                </a>
+
+                <button type="submit" class="btn primary">
+                    {% trans "Add Egg Seller" %}
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

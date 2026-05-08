@@ -1,0 +1,386 @@
+{% extends 'base/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}
+    {% trans "Sheger Market | Ethiopian Sheger Market place" %}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'base/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="hero-slider">
+    <div class="slider-container">
+        
+        <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{% static "base/images/Poultryimgchickens.jpg" %}');">
+            <div class="container">
+                <div class="slide-content">
+                    <h1>{% trans "Poultry Farm" %}</h1>
+                    <p>{% trans "Eggs, Chickens, poultry Equipment and tools for sell" %}</p>
+                    <a href="{% url 'poultryfarm:index' %}" class="btn-primary">{% trans "poultry" %}</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('{% static "base/images/Dairy-Cows-Herd-Field.jpg" %}');">
+            <div class="container">
+                <div class="slide-content">
+                    <h1>{% trans "Dairy Farm" %}</h1>
+                    <p>{% trans "Fresh milk, cheese, butter and other dairy products" %}</p>
+                    <a href="{% url 'electronics:product_list' %}" class="btn-primary">{% trans "Electronics" %}</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slider-controls">
+            <button class="prev-slide"><i class="fas fa-chevron-left"></i></button>
+            <button class="next-slide"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        
+        <div class="slider-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+</section>
+
+<section class="category-section">
+    <div class="container">
+        <h2 class="section-title">{% trans "Shop by Category" %}</h2>
+        <div class="category-container">
+
+            <a href="{% url 'clothings:clothing_list' %}" class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-tshirt"></i>
+                </div>
+                <h3>{% trans "Dairy" %}</h3>
+                <p>{{ clothing_count }}+ {% trans "posted" %}</p>
+            </a>
+
+            <a href="{% url 'poultryfarm:item_list' %}" class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-feather-alt"></i>
+                </div>
+                <h3>{% trans "Poultry" %}</h3>
+                <p>{{ poultry_count }}+ {% trans "posted" %}</p>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="featured-products">
+    <div class="container">
+        <h2 class="section-title">{% trans "Featured Products" %}</h2>
+        <div class="product-container">
+            <main class="product-listings">
+                <div class="product-grid">
+                    {% for product in all_featured|slice:":8" %}
+                    <div class="product-card {% if product.product_type == 'house' %}house-card{% elif product.product_type == 'vehicle' %}vehicle-card{% elif product.product_type == 'electronics' %}electronics-card{% elif product.product_type == 'clothing' %}clothing-card{% elif product.product_type == 'poultry' %}poultry-card{% endif %}">
+                      
+                        <div class="card-image">
+                            {% if product.product_type == 'house' %}
+                                {% if product.images.exists %}
+                                    <img src="{{ product.images.first.image.url }}" alt="{{ product.title }}" loading="lazy">
+                                {% else %}
+                                    <img src="{% static 'base/images/default-house.jpg' %}" alt="{{ product.title }}" loading="lazy">
+                                {% endif %}
+                            {% elif product.product_type == 'vehicle' %}
+                                {% if product.images.exists %}
+                                    <img src="{{ product.images.first.image.url }}" alt="{{ product.make }} {{ product.model }}" loading="lazy">
+                                {% else %}
+                                    <img src="{% static 'base/images/default-vehicle.jpg' %}" alt="{{ product.make }} {{ product.model }}" loading="lazy">
+                                {% endif %}
+                            {% elif product.product_type == 'electronics' %}
+                                {% if product.images.exists %}
+                                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" loading="lazy">
+                                {% else %}
+                                    <img src="{% static 'base/images/default-electronics.jpg' %}" alt="{{ product.name }}" loading="lazy">
+                                {% endif %}
+                            {% elif product.product_type == 'clothing' %}
+                                {% if product.images.exists %}
+                                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" loading="lazy">
+                                {% else %}
+                                    <img src="{% static 'base/images/default-clothing.jpg' %}" alt="{{ product.name }}" loading="lazy">
+                                {% endif %}
+                            {% elif product.product_type == 'poultry' %}
+                                {% if product.main_image %}
+                                    <img src="{{ product.main_image.url }}" alt="{{ product.name }}" loading="lazy">
+                                {% else %}
+                                    <img src="{% static 'base/images/default-poultry.jpg' %}" alt="{{ product.name }}" loading="lazy">
+                                {% endif %}
+                            {% endif %}
+                            
+                            <span class="carted-badge {% if product.is_carted %}carted{% endif %}">
+                                <i class="fas fa-shopping-cart"></i>
+                            </span>
+                            
+                            <div class="interaction-buttons">
+                                <button type="button" 
+                                        class="interaction-button like-button"
+                                        aria-label="Like this product"
+                                        data-item-id="{{ product.id }}"
+                                        data-action="like">
+                                    <i class="fas fa-thumbs-up" aria-hidden="true"></i> 
+                                    <span class="interaction-count">{{ product.like_count }}</span>
+                                </button>
+
+                                <button type="button" 
+                                        class="interaction-button share-button"
+                                        aria-label="Share this product"
+                                        data-item-id="{{ product.id }}"
+                                        data-action="share"> 
+                                    <i class="fas fa-share-alt" aria-hidden="true"></i> 
+                                    <span class="interaction-count">{{ product.share_count }}</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card-content">
+                            <div class="product-meta">
+                                {% if product.product_type == 'house' %}
+                                    <span class="product-year">{{ product.bedrooms }} {% trans "Bed" %}</span>
+                                    <span class="product-mileage"><i class="fas fa-ruler-combined"></i> {{ product.area }} m²</span>
+                                {% elif product.product_type == 'vehicle' %}
+                                    <span class="product-year">{{ product.year }}</span>
+                                    <span class="product-mileage"><i class="fas fa-tachometer-alt"></i> {{ product.mileage|floatformat:"0" }} km</span>
+                                {% elif product.product_type == 'electronics' %}
+                                    <span class="product-year">{{ product.brand|default:"N/A" }}</span>
+                                    <span class="product-mileage"><i class="fas fa-microchip"></i> {{ product.condition|default:"N/A" }}</span>
+                                {% elif product.product_type == 'clothing' %}
+                                    <span class="product-year">{{ product.brand|default:"N/A" }}</span>
+                                    <span class="product-mileage"><i class="fas fa-tshirt"></i> {{ product.size|default:"N/A" }}</span>
+                                {% elif product.product_type == 'poultry' %}
+                                    <span class="product-year">{{ product.category|default:"N/A" }}</span>
+                                    <span class="product-mileage"><i class="fas fa-weight"></i> {{ product.weight|default:"N/A" }}</span>
+                                {% endif %}
+                            </div>
+
+                            <h3>
+                                {% if product.product_type == 'house' %}
+                                    {{ product.title }}
+                                {% elif product.product_type == 'vehicle' %}
+                                    {{ product.year }} {{ product.make }} {{ product.model }}
+                                {% else %}
+                                    {{ product.name }}
+                                {% endif %}
+                            </h3>
+
+                            {% if product.product_type == 'vehicle' %}
+                            <div class="product-specs">
+                                <span><i class="fas fa-gas-pump"></i> {{ product.get_fuel_type_display }}</span>
+                                <span><i class="fas fa-cog"></i> {{ product.engine_size|default:"N/A" }}</span>
+                            </div>
+                            {% endif %}
+
+                            <div class="product-price">
+                                <span class="price">
+                                    {% if product.product_type == 'clothing' %}
+                                        ${{ product.current_price }}
+                                    {% else %}
+                                        ${{ product.price }}
+                                    {% endif %}
+                                </span>
+                            </div>
+
+                            <a href="
+                                {% if product.product_type == 'house' %}
+                                    {% url 'houses:house_detail' product.id %}
+                                {% elif product.product_type == 'vehicle' %}
+                                    {% url 'dairyfarm:dairyfarm_detail' product.slug %}
+                                {% elif product.product_type == 'electronics' %}
+                                    {% url 'electronics:product_detail' product.id %}
+                                {% elif product.product_type == 'clothing' %}
+                                    {% url 'clothings:clothing_detail' product.slug %}
+                                {% elif product.product_type == 'poultry' %}
+                                    {% url 'poultryfarm:item_detail' product.id %}
+                                {% endif %}" 
+                                class="view-details">
+                                <div class="fraol">
+                                    {% trans "View Details" %} <i class="fas fa-chevron-right"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="no-products">{% trans "No featured products available." %}</p>
+                    {% endfor %}
+                </div>
+                <section class="sponsor-carousel">
+                    <div class="container">
+                        <h2 class="section-title">{% trans "Our Sponsors" %}</h2>
+
+                        <div class="sponsor-slider">
+                            <div class="sponsor-track">
+
+                                <div class="sponsor-logo">
+                                    <a href="{% url 'companies:ethiochicken' %}">
+                                    <img src="{% static 'base/images/ethiochickenlogo.jpg' %}" alt="Sponsor 1">
+                                    </a>
+                                </div>
+
+                                <div class="sponsor-logo">
+                                    <a href="{% url 'companies:nvi' %}">
+                                    <img src="{% static 'base/images/nvilogo.jpeg' %}" alt="Sponsor 2">
+                                    </a>
+                                </div>
+
+                                <div class="sponsor-logo">
+                                    <a href="{% url 'companies:alema' %}">
+                                    <img src="{% static 'base/images/amenfarms.png' %}" alt="Sponsor 3">
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {% if all_featured|length > 8 %}
+                <div class="load-more-container">
+                    <button id="load-more-btn" class="btn-primary load-more-btn">
+                        {% trans "Load More Products" %} 
+                        <span class="product-count">({{ all_featured|length|add:"-8" }} {% trans "more" %})</span>
+                    </button>
+                    <div id="more-products" class="more-products-grid" style="display: none;">
+                        {% for product in all_featured|slice:"8:" %}
+                        <div class="product-card">
+                            
+                            <div class="card-image">
+                                {% if product.product_type == 'house' %}
+                                    {% if product.images.exists %}
+                                        <img src="{{ product.images.first.image.url }}" alt="{{ product.title }}" loading="lazy">
+                                    {% else %}
+                                        <img src="{% static 'base/images/default-house.jpg' %}" alt="{{ product.title }}" loading="lazy">
+                                    {% endif %}
+                                {% elif product.product_type == 'vehicle' %}
+                                    {% if product.images.exists %}
+                                        <img src="{{ product.images.first.image.url }}" alt="{{ product.make }} {{ product.model }}" loading="lazy">
+                                    {% else %}
+                                        <img src="{% static 'base/images/default-vehicle.jpg' %}" alt="{{ product.make }} {{ product.model }}" loading="lazy">
+                                    {% endif %}
+                                {% elif product.product_type == 'electronics' %}
+                                    {% if product.images.exists %}
+                                        <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" loading="lazy">
+                                    {% else %}
+                                        <img src="{% static 'base/images/default-electronics.jpg' %}" alt="{{ product.name }}" loading="lazy">
+                                    {% endif %}
+                                {% elif product.product_type == 'clothing' %}
+                                    {% if product.images.exists %}
+                                        <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" loading="lazy">
+                                    {% else %}
+                                        <img src="{% static 'base/images/default-clothing.jpg' %}" alt="{{ product.name }}" loading="lazy">
+                                    {% endif %}
+                                {% elif product.product_type == 'poultry' %}
+                                    {% if product.main_image %}
+                                        <img src="{{ product.main_image.url }}" alt="{{ product.name }}" loading="lazy">
+                                    {% else %}
+                                        <img src="{% static 'base/images/default-poultry.jpg' %}" alt="{{ product.name }}" loading="lazy">
+                                    {% endif %}
+                                {% endif %}
+                                
+                                <span class="carted-badge {% if product.is_carted %}carted{% endif %}">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </span>
+                                
+                                <div class="interaction-buttons">
+                                    <button type="button" 
+                                            class="interaction-button like-button"
+                                            aria-label="Like this product"
+                                            data-item-id="{{ product.id }}"
+                                            data-action="like">
+                                        <i class="fas fa-thumbs-up" aria-hidden="true"></i> 
+                                        <span class="interaction-count">{{ product.like_count }}</span>
+                                    </button>
+
+                                    <button type="button" 
+                                            class="interaction-button share-button"
+                                            aria-label="Share this product"
+                                            data-item-id="{{ product.id }}"
+                                            data-action="share"> 
+                                        <i class="fas fa-share-alt" aria-hidden="true"></i> 
+                                        <span class="interaction-count">{{ product.share_count }}</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="card-content">
+                                <div class="product-meta">
+                                    {% if product.product_type == 'house' %}
+                                        <span class="product-year">{{ product.bedrooms }} {% trans "Bed" %}</span>
+                                        <span class="product-mileage"><i class="fas fa-ruler-combined"></i> {{ product.area }} m²</span>
+                                    {% elif product.product_type == 'vehicle' %}
+                                        <span class="product-year">{{ product.year }}</span>
+                                        <span class="product-mileage"><i class="fas fa-tachometer-alt"></i> {{ product.mileage|floatformat:"0" }} km</span>
+                                    {% elif product.product_type == 'electronics' %}
+                                        <span class="product-year">{{ product.brand|default:"N/A" }}</span>
+                                        <span class="product-mileage"><i class="fas fa-microchip"></i> {{ product.condition|default:"N/A" }}</span>
+                                    {% elif product.product_type == 'clothing' %}
+                                        <span class="product-year">{{ product.brand|default:"N/A" }}</span>
+                                        <span class="product-mileage"><i class="fas fa-tshirt"></i> {{ product.size|default:"N/A" }}</span>
+                                    {% elif product.product_type == 'poultry' %}
+                                        <span class="product-year">{{ product.category|default:"N/A" }}</span>
+                                        <span class="product-mileage"><i class="fas fa-weight"></i> {{ product.weight|default:"N/A" }}</span>
+                                    {% endif %}
+                                </div>
+
+                                <h3>
+                                    {% if product.product_type == 'house' %}
+                                        {{ product.title }}
+                                    {% elif product.product_type == 'vehicle' %}
+                                        {{ product.year }} {{ product.make }} {{ product.model }}
+                                    {% else %}
+                                        {{ product.name }}
+                                    {% endif %}
+                                </h3>
+
+                                {% if product.product_type == 'vehicle' %}
+                                <div class="product-specs">
+                                    <span><i class="fas fa-gas-pump"></i> {{ product.get_fuel_type_display }}</span>
+                                    <span><i class="fas fa-cog"></i> {{ product.engine_size|default:"N/A" }}</span>
+                                </div>
+                                {% endif %}
+
+                                <div class="product-price">
+                                    <span class="price">
+                                        {% if product.product_type == 'clothing' %}
+                                            ${{ product.current_price }}
+                                        {% else %}
+                                            ${{ product.price }}
+                                        {% endif %}
+                                    </span>
+                                </div>
+
+                                <a href="
+                                    {% if product.product_type == 'house' %}
+                                        {% url 'houses:house_detail' product.id %}
+                                    {% elif product.product_type == 'vehicle' %}
+                                        {% url 'dairyfarm:dairyfarm_detail' product.slug %}
+                                    {% elif product.product_type == 'electronics' %}
+                                        {% url 'electronics:product_detail' product.id %}
+                                    {% elif product.product_type == 'clothing' %}
+                                        {% url 'clothings:clothing_detail' product.slug %}
+                                    {% elif product.product_type == 'poultry' %}
+                                        {% url 'poultryfarm:item_detail' product.id %}
+                                    {% endif %}" 
+                                    class="view-details">
+                                    <div class="fraol">
+                                        {% trans "View Details" %} <i class="fas fa-chevron-right"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'base/js/index.js' %}"></script>
+{% endblock %}

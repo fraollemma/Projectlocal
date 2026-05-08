@@ -1,0 +1,31 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'dairyfarm/css/order_form.css' %}">
+
+<div class="order-container">
+
+    <h2>🧾 Order {{ view.kwargs.slug }}</h2>
+
+    <form method="POST" class="order-form">
+        {% csrf_token %}
+
+        <div class="field">
+            <label>Quantity</label>
+            {{ form.quantity }}
+        </div>
+
+        <div class="field">
+            <label>Delivery Address</label>
+            {{ form.address }}
+        </div>
+
+        <button type="submit" class="btn">Place Order</button>
+
+    </form>
+
+</div>
+
+{% endblock %}

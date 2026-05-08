@@ -1,0 +1,21 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="delete-container">
+
+    <h2>⚠️ Delete Product</h2>
+
+    <p>Are you sure you want to delete <b>{{ object.name }}</b>?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <button type="submit" class="btn delete">Yes, Delete</button>
+        <a href="{% url 'dairyfarm:dairyfarm_list' %}" class="btn cancel">Cancel</a>
+    </form>
+
+</div>
+
+{% endblock %}

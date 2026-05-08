@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% trans "My Egg Orders | Ethiopian Sheger Marketplace" %}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'poultryfarm/css/egg_seller_orders.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="orders-page">
+
+    <a href="{% url 'poultryfarm:egg_sellers' %}" class="back-to-home">
+        <i class="fas fa-arrow-left"></i> {% trans "Back" %}
+    </a>
+
+    <div class="egg-header">
+        <h2>{% trans "My Egg Orders" %}</h2>
+        <p class="subtitle">{% trans "Track all customer orders in one place" %}</p>
+    </div>
+
+    <div class="table-wrapper">
+
+        {% if orders %}
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th>{% trans "Customer" %}</th>
+                    <th>{% trans "Email" %}</th>
+                    <th>{% trans "Phone" %}</th>
+                    <th>{% trans "Address" %}</th>
+                    <th>{% trans "Qty" %}</th>
+                    <th>{% trans "Total" %}</th>
+                    <th>{% trans "Status" %}</th>
+                    <th>{% trans "Date" %}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.user.username|default:"-" }}</td>
+                    <td>{{ order.user.email|default:"-" }}</td>
+                    <td>{{ order.user.phone_number|default:"-" }}</td>
+
+                    <td title="{{ order.customer_address }}">
+                        {{ order.customer_address|truncatechars:25 }}
+                    </td>
+
+                    <td>{{ order.quantity }}</td>
+                    <td>{{ order.total_price }} birr</td>
+
+                    <td>
+                        <span class="status status-{{ order.status }}">
+                            {{ order.get_status_display }}
+                        </span>
+                    </td>
+
+                    <td>{{ order.order_date|date:"M d, Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <p>{% trans "No orders yet." %}</p>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'poultryfarm/js/egg_seller_orders.js' %}"></script>
+{% endblock %}

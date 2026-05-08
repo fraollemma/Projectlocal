@@ -1,0 +1,135 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-11 01:34+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .\poultryfarm\templates\poultryfarm\item_create.html:15
+msgid "Create New Item"
+msgstr "Meeshaa Haaraa Uumi"
+
+#: .\poultryfarm\templates\poultryfarm\item_create.html:16
+msgid "Fill in the details below to add a new item to your collection"
+msgstr ""
+
+#: .\poultryfarm\templates\poultryfarm\item_create.html:27
+msgid "Basic Information"
+msgstr ""
+
+#: .\poultryfarm\templates\poultryfarm\item_create.html:54
+#: .\poultryfarm\templates\poultryfarm\item_detail.html:108
+msgid "Description"
+msgstr ""
+
+#: .\poultryfarm\templates\poultryfarm\item_create.html:67
+msgid "Provide detailed information about your item"
+msgstr ""
+
+#: .\poultryfarm\templates\poultryfarm\item_create.html:74
+msgid "Images"
+msgstr ""
+
+#: .\poultryfarm\templates\poultryfarm\item_create.html:84
+msgid "Click to upload images"
+msgstr ""
+
+#: .\poultryfarm\templates\poultryfarm\item_create.html:85
+msgid "PNG, JPG up to 5MB"
+msgstr ""
+
+#: .\poultryfarm\templates\poultryfarm\item_create.html:103
+msgid "Save Item"
+msgstr "Meeshaa Olkaa'i"
+
+#: .\poultryfarm\templates\poultryfarm\item_detail.html:30
+#, fuzzy
+#| msgid "Sell Item"
+msgid "Seller"
+msgstr "Meeshaa Gurguri"
+
+#: .\poultryfarm\templates\poultryfarm\item_detail.html:39
+#, fuzzy
+#| msgid "Contact Seller"
+msgid "Contact"
+msgstr "Itti Gadhi Fudhii Gurguraa"
+
+#: .\poultryfarm\templates\poultryfarm\item_detail.html:86
+msgid "Add to Cart"
+msgstr ""
+
+#: .\poultryfarm\templates\poultryfarm\item_detail.html:116
+msgid "Gallery"
+msgstr "Suuraalee"
+
+#: .\poultryfarm\templates\poultryfarm\item_detail.html:143
+msgid "Edit"
+msgstr ""
+
+#: .\poultryfarm\templates\poultryfarm\item_detail.html:149
+msgid "Delete"
+msgstr ""
+
+#: .\poultryfarm\templates\poultryfarm\item_list.html:12
+msgid "Poultry Marketplace"
+msgstr "Gabaa Horii Bosonaa"
+
+#: .\poultryfarm\templates\poultryfarm\item_list.html:15
+msgid "Sell Item"
+msgstr "Meeshaa Gurguri"
+
+#: .\poultryfarm\templates\poultryfarm\item_list.html:28
+msgid "ETB"
+msgstr "ETB"
+
+#: .\poultryfarm\templates\poultryfarm\item_list.html:48
+msgid "Posted"
+msgstr "Maxxanfame"
+
+#: .\poultryfarm\templates\poultryfarm\item_list.html:57
+msgid "No poultry items available yet"
+msgstr "Meeshaan horii ammaa hin jiru"
+
+#: .\poultryfarm\templates\poultryfarm\item_list.html:60
+msgid "Be the first to sell"
+msgstr "Nama jalqabaa ta’i meeshaa gurguruuf"
+
+#: .\poultryfarm\templates\poultryfarm\item_list.html:63
+msgid "Please login to add items"
+msgstr "Meeshaalee dabaluu dura seeni"
+
+#: .\poultryfarm\templates\poultryfarm\item_list.html:74
+msgid "First"
+msgstr "Jalqaba"
+
+#: .\poultryfarm\templates\poultryfarm\item_list.html:77
+msgid "Previous"
+msgstr "Duraa"
+
+#: .\poultryfarm\templates\poultryfarm\item_list.html:83
+msgid "Page"
+msgstr "Fuula"
+
+#: .\poultryfarm\templates\poultryfarm\item_list.html:83
+msgid "of"
+msgstr "irra"
+
+#~ msgid "Price: ETB"
+#~ msgstr "Gatii: ETB"
+
+#, fuzzy
+#~| msgid "No poultry items available yet"
+#~ msgid "No additional images available."
+#~ msgstr "Meeshaan horii ammaa hin jiru"

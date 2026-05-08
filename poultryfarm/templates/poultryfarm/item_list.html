@@ -1,0 +1,132 @@
+<!-- base/item_list.html -->
+{% extends "base/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load poultry_extras %}
+
+{% block title %}
+    {% trans "Poultry Items List | Ethiopian Sheger Market place" %}
+{% endblock %}
+
+{% block css %} 
+<link rel="stylesheet" href="{% static 'poultryfarm/css/item_list.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}
+ 
+{% block content %}
+<div class="poultry-page">
+    <div class="container"> 
+
+        <!-- FILTER BAR -->
+        <div class="filters-bar">
+            <a href="{% url 'poultryfarm:item_create' %}" class="add-item-btn">
+                <i class="fas fa-plus"></i>
+                {% trans "Sell Item" %}
+            </a>
+            
+            <div class="results-count">
+                <strong>{{ object_list.count }}</strong> {% trans "items" %}
+            </div>
+
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="grid">
+                    <i class="fas fa-th"></i>
+                </button>
+                <button class="view-btn" data-view="list">
+                    <i class="fas fa-list"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- EMPTY STATE -->
+        {% if not object_list %}
+        <div class="empty-state">
+            <div class="empty-icon">🐔</div>
+            <h3>{% trans "No items yet" %}</h3>
+            <p>{% trans "Be the first to sell something!" %}</p>
+            <a href="{% url 'poultryfarm:item_create' %}" class="add-item-btn">
+                {% trans "Create Item" %}
+            </a>
+        </div>
+        {% endif %}
+ 
+        <!-- GRID -->
+        <div class="poultry-grid">
+            {% for item in poultry %}
+            <article class="poultry-card">
+
+                <!-- IMAGE -->
+                <div class="card-image">
+                    <a href="{% url 'poultryfarm:item_detail' item.slug %}">
+                        {% if item.sub_images.exists %}
+                            <img src="{{ item.sub_images.first.image.url }}">
+                        {% elif item.main_image %}
+                            <img src="{{ item.main_image.url }}">
+                        {% else %}
+                            <img src="{% static 'poultryfarm/images/product-chicken.jpg' %}">
+                        {% endif %}
+                    </a>
+
+                    <!-- BADGE -->
+                    <span class="badge">New</span>
+
+                    <!-- CART ICON -->
+                    <div class="cart-icon">
+                        <button class="action-btns cart-btn {% if item.in_cart %}in-cart{% endif %}"
+                                data-item-id="{{ item.slug }}" data-cart-url="{% url 'cart:toggle_cart_item' item.slug %}">
+                            <i class="fas fa-shopping-cart"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- ACTIONS -->
+      
+                    <div class="quick-actions">
+                        <button class="action-btns like-btn {% if item.user_has_liked %}liked{% endif %}"
+                                data-item-id="{{ item.slug }}" 
+                                data-like-url="{% url 'poultryfarm:like_item' item.slug %}">
+                            <i class="fas fa-heart"></i>
+                            <span class="count">{{ item.like_count }}</span>
+                        </button>
+
+                        <button class="action-btns share-btn"
+                                data-item-id="{{ item.slug }}" data-share-url="{% url 'poultryfarm:share_item' item.slug %}">
+                            <i class="fas fa-share-alt"></i>
+                            <span class="count">{{ item.share_count }}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CONTENT -->
+                <div class="card-content">
+
+                    <h3 class="item-title">
+                        <a href="{% url 'poultryfarm:item_detail' item.slug %}">
+                            {{ item.name }}
+                        </a>
+                    </h3>
+
+                    <div class="item-price">
+                        ETB {{ item.price|floatformat:"0" }}
+                    </div>
+
+                    <div class="card-meta">
+                        <i class="fas fa-clock"></i>
+                        {{ item.created_at|short_timesince }}
+                    </div>
+
+                    <a href="{% url 'poultryfarm:item_detail' item.slug %}" class="view-btn">
+                        {% trans "View Details" %}
+                    </a>
+
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'poultryfarm/js/item_list.js' %}"></script>
+{% endblock %} 

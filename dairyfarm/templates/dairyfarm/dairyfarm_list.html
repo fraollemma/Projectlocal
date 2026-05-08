@@ -1,0 +1,51 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'dairyfarm/css/dairyfarm_list.css' %}">
+
+<div class="container">
+
+    <h1 class="page-title">🥛 Dairy Products</h1> 
+
+    <!-- add button -->
+    <a href="{% url 'dairyfarm:dairyfarm_add' %}" class="btn add">Add Product</a>
+    <a href="{% url 'dairyfarm:dairyfarm_detail' product.slug %}">
+            {{ product.name }}
+        </a>
+    <div class="grid">
+
+        {% for product in products %}
+        <div class="card">
+
+            {% if product.images.exists %}
+                <img src="{{ product.images.first.image.url }}" class="card-img">
+            {% else %}
+                <img src="{% static 'base/images/default.jpg' %}" class="card-img">
+            {% endif %}
+
+            <div class="card-body">
+                <h3>{{ product.name }}</h3>
+
+                <p class="price">ETB {{ product.price }}</p>
+
+                <p class="desc">
+                    {{ product.description|truncatewords:12 }}
+                </p>
+
+                <div class="actions">
+                    <a href="{% url 'dairyfarm:dairyfarm_detail' product.slug %}" class="btn">View</a>
+                    <a href="{% url 'dairyfarm:order' product.slug %}" class="btn buy">Order</a>
+                </div>
+            </div>
+
+        </div>
+        {% empty %}
+        <p>No dairy products available.</p>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,125 @@
+:root {
+    --primary: #2563eb;
+    --bg: #f1f5f9;
+    --card: #ffffff;
+    --text: #0f172a;
+    --border: #e2e8f0;
+    --radius: 14px;
+}
+
+body {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+}
+
+.item-create-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.item-form-container {
+    width: 100%;
+    max-width: 800px;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+/* HEADER */
+.form-header {
+    padding: 2rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.item-form-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* SECTION */
+.form-section {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.section-title {
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+/* GRID */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* INPUTS */
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+/* UPLOAD */
+.upload-box {
+    border: 2px dashed var(--border);
+    padding: 2rem;
+    text-align: center;
+    border-radius: var(--radius);
+    cursor: pointer;
+    position: relative;
+}
+
+.upload-box input {
+    display: none;
+}
+
+.upload-box:hover {
+    border-color: var(--primary);
+    background: #eff6ff;
+}
+
+/* PREVIEW */
+.main-preview-image {
+    max-width: 200px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.preview-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.preview-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* BUTTON */
+.form-actions {
+    padding: 1.5rem;
+    text-align: right;
+}
+
+.submit-btn {
+    background: var(--primary);
+    color: white;
+    padding: 0.7rem 1.4rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #1d4ed8;
+}
