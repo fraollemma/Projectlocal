@@ -167,6 +167,10 @@ ul{
     margin-top: 40px;
     padding-top: 20px;
     border-top: 1px solid rgba(255,255,255,0.1);
+    background: linear-gradient(180deg, 
+        rgba(0, 0, 0, 0.6) 0%, 
+        rgba(0, 0, 0, 0.4) 45%, 
+        rgba(0, 0, 0, 0.25) 100%);
 }
 
 .hero-feature {
@@ -258,11 +262,11 @@ ul{
     font-weight:700;
     letter-spacing:1px;
     display:block;
-    margin-bottom:10px;
+    margin-bottom:5px;
 }
 
 .section-header h2{
-    font-size:clamp(2rem,5vw,3.5rem);
+    font-size:clamp(1.5rem,4vw,3rem);
     font-weight:800;
     color:#0f172a;
 }
@@ -277,20 +281,24 @@ ul{
 
 /* Section & Header */
 .categories-section {
-  padding: clamp(4rem, 8vw, 100px) 5%;
+  padding: 15px 5%;
   max-width: 1400px;
   margin: 0 auto;
+  background: #f0f09f;
 }
 
 .section-header {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.45rem;
+  text-align: center;
 }
 
 .section-line {
-  margin: 0 auto 3rem;
+  margin: 0 auto 1rem;
+  width: 80px;
+  height: 4px;
   border-radius: 2px;
   background: linear-gradient(90deg, #3a9b46, #67c271);
 }
@@ -299,7 +307,7 @@ ul{
 .categories-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  gap: 2rem;
+  gap: 1rem;
 }
 
 /* Category Card */
@@ -480,7 +488,7 @@ ul{
 ========================= */
 
 .stats-section{
-    background:#f8f8f5;
+    background:#ebebeb;
     padding:70px 0;
     overflow:hidden;
 }

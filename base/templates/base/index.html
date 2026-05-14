@@ -21,28 +21,27 @@
     <div class="home-hero__content">
 
         <span class="hero-small-text">
-            WELCOME TO ETHIOPIAN FARM MARKETPLACE
+            {% trans "WELCOME TO ETHIO POULTRY MARKETPLACE" %}
         </span>
 
         <h1>
-            Connecting Farmers,<br>
-            Feeding the Nation
+            {% trans "Connecting Farmers," %}<br>
+            {% trans "And Helping Them Succeed" %}
         </h1>
 
         <p>
-            Your trusted marketplace for quality poultry, dairy products,
-            and farm services from verified Ethiopian farmers.
+            {% trans "Your trusted marketplace for quality poultry, dairy products, and farm services from verified Ethiopian farmers." %}
         </p>
 
         <div class="hero-buttons">
 
             <a href="{% url 'poultryfarm:index' %}" class="btn-primary">
-                Explore Poultry
+                {% trans "Explore Poultry" %}
                 <i class="fas fa-arrow-right"></i>
             </a>
 
             <a href="{% url 'dairyfarm:dairyfarm_list' %}" class="btn-secondary">
-                Explore Dairy
+                {% trans "Explore Dairy" %}
                 <i class="fas fa-arrow-right"></i>
             </a>
 
@@ -55,8 +54,8 @@
                     <i class="fas fa-user-shield"></i>
                 </div>
                 <div>
-                    <h4>Trusted Farmers</h4>
-                    <p>Verified & Reliable</p>
+                    <h4>{% trans "Trusted Farmers" %}</h4>
+                    <p>{% trans "Verified & Reliable" %}</p>
                 </div>
             </div>
 
@@ -65,8 +64,8 @@
                     <i class="fas fa-award"></i>
                 </div>
                 <div>
-                    <h4>Quality Products</h4>
-                    <p>Fresh & Safe</p>
+                    <h4>{% trans "Quality Products" %}</h4>
+                    <p>{% trans "Fresh & Safe" %}</p>
                 </div>
             </div>
 
@@ -75,8 +74,8 @@
                     <i class="fas fa-truck"></i>
                 </div>
                 <div>
-                    <h4>Fast Delivery</h4>
-                    <p>Across Ethiopia</p>
+                    <h4>{% trans "Fast Delivery" %}</h4>
+                    <p>{% trans "Across Ethiopia" %}</p>
                 </div>
             </div>
 
@@ -85,8 +84,8 @@
                     <i class="fas fa-headset"></i>
                 </div>
                 <div>
-                    <h4>Expert Support</h4>
-                    <p>Always Here To Help</p>
+                    <h4>{% trans "Expert Support" %}</h4>
+                    <p>{% trans "Always Here To Help" %}</p>
                 </div>
             </div>
 
@@ -100,8 +99,8 @@
 <section class="categories-section">
 
     <div class="section-header">
-        <span>MARKETPLACE</span>
-        <h2>Choose Your Category</h2>
+        <span>{% trans "MARKETPLACE" %}</span>
+        <h2>{% trans "Choose Your Category" %}</h2>
         <div class="section-line"></div>
     </div>
 
@@ -120,21 +119,21 @@
 
             <div class="category-content">
 
-                <h3 class="orange">Poultry Farm</h3>
+                <h3 class="orange">{% trans "Poultry Farm" %}</h3>
 
                 <p>
-                    Buy chickens, eggs, chicks, poultry meat and access training and consultancy services.
+                    {% trans "Buy chickens, eggs, chicks, poultry meat and access training and consultancy services." %}
                 </p>
 
                 <ul>
-                    <li>Poultry Items</li>
-                    <li>Fresh Eggs</li>
-                    <li>Poultry Chickens</li>
-                    <li>Training & Consultancy</li>
+                    <li>{% trans "Poultry Items" %}</li>
+                    <li>{% trans "Fresh Eggs" %}</li>
+                    <li>{% trans "Poultry Chickens" %}</li>
+                    <li>{% trans "Training & Consultancy" %}</li>
                 </ul>
 
                 <a href="{% url 'poultryfarm:index' %}" class="orange-btn">
-                    Visit Poultry Marketplace
+                    {% trans "Visit Poultry Marketplace" %}
                     <i class="fas fa-arrow-right"></i>
                 </a>
 
@@ -155,21 +154,21 @@
 
             <div class="category-content">
 
-                <h3 class="blue">Dairy Farm</h3>
+                <h3 class="blue">{% trans "Dairy Farm" %}</h3>
 
                 <p>
-                    Buy fresh milk, cheese, butter, yogurt and access dairy farming training and consultancy services.
+                    {% trans "Buy fresh milk, cheese, butter, yogurt and access dairy farming training and consultancy services." %}
                 </p>
 
                 <ul>
-                    <li>Milk & Milk Products</li>
-                    <li>Cheese & Butter</li>
-                    <li>Yogurt & Cream</li>
-                    <li>Training & Consultancy</li>
+                    <li>{% trans "Milk & Milk Products" %}</li>
+                    <li>{% trans "Cheese & Butter" %}</li>
+                    <li>{% trans "Yogurt & Cream" %}</li>
+                    <li>{% trans "Training & Consultancy" %}</li>
                 </ul>
 
                 <a href="{% url 'dairyfarm:dairyfarm_list' %}" class="blue-btn">
-                    Visit Dairy Marketplace
+                        {% trans "Visit Dairy Marketplace" %}
                     <i class="fas fa-arrow-right"></i>
                 </a>
 
@@ -185,7 +184,7 @@
 <section class="why-us">
 
     <div class="section-header">
-        <h2>Why Choose Us?</h2>
+        <h2>{% trans "Why Choose Us?" %}</h2>
         <div class="section-line"></div>
     </div>
 
@@ -195,9 +194,9 @@
             <div class="why-icon green-light">
                 <i class="fas fa-user-shield"></i>
             </div>
-            <h3>Trusted Platform</h3>
+            <h3>{% trans "Trusted Platform" %}</h3>
             <p>
-                We verify all farmers and ensure quality and transparency in every transaction.
+                {% trans "We verify all farmers and ensure quality and transparency in every transaction." %}
             </p>
         </div>
 
@@ -205,9 +204,9 @@
             <div class="why-icon yellow-light">
                 <i class="fas fa-leaf"></i>
             </div>
-            <h3>Quality Assurance</h3>
+            <h3>{% trans "Quality Assurance" %}</h3>
             <p>
-                All products meet high quality standards for your health and safety.
+                {% trans "All products meet high quality standards for your health and safety." %}
             </p>
         </div>
 
@@ -215,9 +214,9 @@
             <div class="why-icon blue-light">
                 <i class="fas fa-truck"></i>
             </div>
-            <h3>Fast & Reliable Delivery</h3>
+            <h3>{% trans "Fast & Reliable Delivery" %}</h3>
             <p>
-                We deliver fresh products quickly and safely to your doorstep.
+                {% trans "We deliver fresh products quickly and safely to your doorstep." %}
             </p>
         </div>
 
@@ -225,9 +224,9 @@
             <div class="why-icon purple-light">
                 <i class="fas fa-headset"></i>
             </div>
-            <h3>Expert Support</h3>
+            <h3>{% trans "Expert Support" %}</h3>
             <p>
-                Get expert advice, training, and support from experienced professionals.
+                {% trans "Get expert advice, training, and support from experienced professionals." %}
             </p>
         </div>
 
@@ -239,7 +238,7 @@
 <section class="stats-section">
 
     <div class="section-header">
-        <h2>Our Poultry Impact in Numbers</h2>
+        <h2>{% trans "Our Poultry Impact in Numbers" %}</h2>
     </div>
     <div class="stats-grid">
     <div class="stats-track">
@@ -249,8 +248,8 @@
                 <i class="fas fa-shopping-bag"></i>
             </div>
             <h3>248+</h3>
-            <h4>Products</h4>
-            <p>Poultry Products</p>
+            <h4>{% trans "Products" %}</h4>
+            <p>{% trans "Poultry Products" %}</p>
         </div>
 
         <div class="stat-box">
@@ -258,8 +257,8 @@
                 <i class="fas fa-egg"></i>
             </div>
             <h3>56+</h3>
-            <h4>Egg Sellers</h4>
-            <p>Poultry Egg Sellers</p>
+            <h4>{% trans "Egg Sellers" %}</h4>
+            <p>{% trans "Poultry Egg Sellers" %}</p>
         </div>
 
         <div class="stat-box">
@@ -267,8 +266,8 @@
                 <i class="fas fa-dove"></i>
             </div>
             <h3>34+</h3>
-            <h4>Chicken Sellers</h4>
-            <p>Poultry Chicken Sellers</p>
+            <h4>{% trans "Chicken Sellers" %}</h4>
+            <p>{% trans "Poultry Chicken Sellers" %}</p>
         </div>
 
         <div class="stat-box">
@@ -276,8 +275,8 @@
                 <i class="fas fa-graduation-cap"></i>
             </div>
             <h3>12+</h3>
-            <h4>Trainings</h4>
-            <p>Poultry Training Programs</p>
+            <h4>{% trans "Trainings" %}</h4>
+            <p>{% trans "Poultry Training Programs" %}</p>
         </div>
 
         <div class="stat-box">
@@ -285,8 +284,8 @@
                 <i class="fas fa-users"></i>
             </div>
             <h3>18+</h3>
-            <h4>Consultants</h4>
-            <p>Poultry Expert Consultants</p>
+            <h4>{% trans "Consultants" %}</h4>
+            <p>{% trans "Poultry Expert Consultants" %}</p>
         </div>
 
         <div class="stat-box">
@@ -294,8 +293,8 @@
                 <i class="fas fa-shopping-bag"></i>
             </div>
             <h3>248+</h3>
-            <h4>Products</h4>
-            <p>Dairy Products</p>
+            <h4>{% trans "Products" %}</h4>
+            <p>{% trans "Dairy Products" %}</p>
         </div>
 
         <div class="stat-box">
@@ -303,8 +302,8 @@
                 <i class="fas fa-dove"></i>
             </div>
             <h3>34+</h3>
-            <h4>Cow Sellers</h4>
-            <p>Dairy Cow Sellers</p>
+            <h4>{% trans "Cow Sellers" %}</h4>
+            <p>{% trans "Dairy Cow Sellers" %}</p>
         </div>
 
         <div class="stat-box">
@@ -312,8 +311,8 @@
                 <i class="fas fa-graduation-cap"></i>
             </div>
             <h3>12+</h3>
-            <h4>Trainings</h4>
-            <p>Dairy Training Programs</p>
+            <h4>{% trans "Trainings" %}</h4>
+            <p>{% trans "Dairy Training Programs" %}</p>
         </div>
 
         <div class="stat-box">
@@ -321,8 +320,8 @@
                 <i class="fas fa-users"></i>
             </div>
             <h3>18+</h3>
-            <h4>Consultants</h4>
-            <p>Dairy Expert Consultants</p>
+            <h4>{% trans "Consultants" %}</h4>
+            <p>{% trans "Dairy Expert Consultants" %}</p>
         </div>
 
     </div>
