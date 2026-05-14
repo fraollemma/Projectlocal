@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block title %}
-    {% trans "Cart Details | Ethiopian Sheger Market place" %}
+    {% trans "Cart Details | Ethiopian Poultry And Dairy Farm Market place" %}
 {% endblock %}
 
 {% block css %}
@@ -36,11 +36,11 @@
                         <div class="quantity-controls">
                             <button class="quantity-btn">-</button>
                             <input type="number" class="quantity-input" value="{{ item.quantity }}" 
-                                   min="1" data-item-id="{{ item.id }}" data-old-value="{{ item.quantity }}">
+                                   min="1" data-item-id="{{ item.slug }}" data-old-value="{{ item.quantity }}">
                             <button class="quantity-btn">+</button>
                         </div>
                         
-                        <a href="{% url 'cart:remove_from_cart' item.id %}" class="remove-btn">
+                        <a href="{% url 'cart:remove_from_cart' item.slug %}" class="remove-btn">
                             <i class="fas fa-trash"></i> {% trans "Remove" %}
                         </a>
                     </div>

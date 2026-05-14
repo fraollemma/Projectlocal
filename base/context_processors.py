@@ -46,10 +46,6 @@ def category_counts(request):
     counts = {
         'poultry_count': 0,
         'dairy_count': 0,
-        'clothing_count': 0,
-        'electronics_count': 0,
-        'houses_count': 0,
-        'vehicles_count': 0,
     }
 
     try:
@@ -63,29 +59,4 @@ def category_counts(request):
         counts['dairy_count'] = DairyFarmer.objects.count()
     except ImportError:
         pass
-
-    try:
-        from clothings.models import ClothingItem
-        counts['clothing_count'] = ClothingItem.objects.count()
-    except ImportError:
-        pass
-
-    try:
-        from electronics.models import Product as ElectronicsProduct
-        counts['electronics_count'] = ElectronicsProduct.objects.count()
-    except ImportError:
-        pass
-
-    try:
-        from houses.models import House
-        counts['houses_count'] = House.objects.count()
-    except ImportError:
-        pass
-
-    try:
-        from vehicles.models import VehicleItem
-        counts['vehicles_count'] = VehicleItem.objects.count()
-    except ImportError:
-        pass
-
     return counts

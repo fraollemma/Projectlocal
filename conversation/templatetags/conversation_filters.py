@@ -28,7 +28,7 @@ def unread_messages_count(user):
             conversation__members=user,
             is_read=False
         ).exclude(created_by=user).count()
-        cache.set(cache_key, count, timeout=300)  # Cache for 5 minutes
+        cache.set(cache_key, count, timeout=300) 
     
     return count
 
