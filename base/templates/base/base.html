@@ -92,13 +92,7 @@
                     <span class="hub">Agriculture</span>
                 </div>
             </a>
-            <!-- ADMIN BADGE -->
-            {% if user.is_superuser %}
-            <span class="admin-badge" title="Administrator Account">
-                <i class="fas fa-shield-alt"></i>
-                <span>ADMIN</span>
-            </span>
-            {% endif %}
+            
         </div>
 
         <div class="header-actions">
@@ -162,41 +156,6 @@
                             {% trans "Total" %}: <strong id="totalNotification">{{ total_notifications|default:0 }}</strong>
                         </span>
                     </div>
-                </div>
-            </div>
-            {% endif %}
-
-            <!-- ADMIN QUICK ACCESS -->
-            {% if user.is_superuser %}
-            <div class="action-item dropdown">
-                <button class="action-btn admin-btn dropdown-toggle" title="Admin Panel">
-                    <i class="fas fa-cog"></i>
-                </button>
-                <div class="dropdown-menu admin-menu">
-                    <div class="admin-menu-header">
-                        <span>{% trans "Admin Panel" %}</span>
-                    </div>
-                    <a href="{% url 'admin_app:dashboard' %}" class="admin-menu-item">
-                        <i class="fas fa-chart-line"></i>
-                        <span>{% trans "Dashboard" %}</span>
-                    </a>
-                    <a href="{% url 'admin:index' %}" class="admin-menu-item">
-                        <i class="fas fa-list"></i>
-                        <span>{% trans "Manage All" %}</span>
-                    </a>
-                    <div class="admin-menu-divider"></div>
-                    <a href="{% url 'admin_app:manage_users' %}" class="admin-menu-item">
-                        <i class="fas fa-users"></i>
-                        <span>{% trans "Users" %}</span>
-                    </a>
-                    <a href="/" class="admin-menu-item">
-                        <i class="fas fa-home"></i>
-                        <span>{% trans "Houses" %}</span>
-                    </a>
-                    <a href="{% url 'admin_app:manage_poultry' %}" class="admin-menu-item">
-                        <i class="fas fa-egg"></i>
-                        <span>{% trans "Poultry" %}</span>
-                    </a>
                 </div>
             </div>
             {% endif %}
