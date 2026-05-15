@@ -316,13 +316,13 @@ msgstr "ከተረጋገጡ የኢትዮጵያ አርሶ አደሮች ጥራት �
 
 #: .\base\templates\base\index.html:39
 #| msgid " Poultry"
-msgid "Explore Poultry"
-msgstr "የዶሮ እርባታን ያስሱ"
+msgid "Poultry"
+msgstr "የዶሮ እርባታን"
 
 #: .\base\templates\base\index.html:44
 #| msgid " Dairy"
-msgid "Explore Dairy"
-msgstr "የወተት ላምች ያስሱ"
+msgid "Dairy"
+msgstr "የወተት ላምች"
 
 #: .\base\templates\base\index.html:57
 #| msgid "Our Value to Farmers"
