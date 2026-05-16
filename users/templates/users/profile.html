@@ -7,53 +7,135 @@
 {% endblock %}
 
 {% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="{% static 'users/css/profile.css' %}">
 {% endblock %}
 
 {% block content %}
-<div class="profile-container">
-    <h2>{% trans "My Profile" %}</h2>
-
-    <div class="profile-header">
-        <img src="{{ user.profile.profile_picture.url }}" alt="{% trans 'Profile Picture' %}" class="profile-picture">
-        <h3>{{ user.profile.username|default:user.username }}</h3>
+<div class="profile-wrapper">
+    <!-- Header Section -->
+    <div class="profile-header-section">
+        <div class="header-background"></div>
+        <div class="profile-header-content">
+            <div class="profile-avatar-wrapper">
+                <img src="{{ user.profile.profile_picture.url }}" alt="{% trans 'Profile Picture' %}" class="profile-avatar">
+                <span class="online-indicator"></span>
+            </div>
+            <div class="header-info">
+                <h1 class="profile-name">{{ user.profile.username|default:user.username }}</h1>
+                <p class="profile-subtitle">{% trans "Member Profile" %}</p>
+            </div>
+        </div>
     </div>
 
-    <div class="profile-details">
-        <p><strong>{% trans "Username:" %}</strong> {{ user.username }}</p>
-        <p><strong>{% trans "Phone Number:" %}</strong> {{ user.phone_number }}</p>
-        <p><strong>{% trans "Location:" %}</strong> {{ user.profile.location|default:"-" }}</p>
-        <p><strong>{% trans "Bio:" %}</strong> {{ user.profile.bio|default:"-" }}</p>
+    <!-- Main Content Container -->
+    <div class="profile-main-container">
+        <!-- Sidebar -->
+        <div class="profile-sidebar">
+            <div class="info-card">
+                <h3 class="card-title">
+                    <i class="fas fa-user-circle"></i> {% trans "Basic Information" %}
+                </h3>
+                <div class="info-item">
+                    <span class="label">{% trans "Username" %}</span>
+                    <span class="value">{{ user.username }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">{% trans "Email" %}</span>
+                    <span class="value">{{ user.email }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">{% trans "Phone" %}</span>
+                    <span class="value">{{ user.phone_number|default:"N/A" }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">{% trans "Location" %}</span>
+                    <span class="value"><i class="fas fa-map-marker-alt"></i> {{ user.profile.location|default:"Not specified" }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="profile-content">
+            <!-- Bio Card -->
+            {% if user.profile.bio %}
+            <div class="content-card bio-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-quote-left"></i> {% trans "About Me" %}
+                    </h3>
+                </div>
+                <p class="bio-text">{{ user.profile.bio }}</p>
+            </div>
+            {% endif %}
+
+            <!-- Social Media Card -->
+            <div class="content-card social-card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-share-alt"></i> {% trans "Connect With Me" %}
+                    </h3>
+                </div>
+                <div class="social-links-grid">
+                    {% if user.profile.telegram %}
+                        <a href="https://t.me/{{ user.profile.telegram }}" target="_blank" class="social-link telegram" title="Telegram">
+                            <i class="fab fa-telegram"></i>
+                            <span>Telegram</span>
+                        </a>
+                    {% endif %}
+                    {% if user.profile.facebook %}
+                        <a href="https://facebook.com/{{ user.profile.facebook }}" target="_blank" class="social-link facebook" title="Facebook">
+                            <i class="fab fa-facebook"></i>
+                            <span>Facebook</span>
+                        </a>
+                    {% endif %}
+                    {% if user.profile.instagram %}
+                        <a href="https://instagram.com/{{ user.profile.instagram }}" target="_blank" class="social-link instagram" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
+                    {% endif %}
+                    {% if user.profile.linkedin %}
+                        <a href="https://linkedin.com/in/{{ user.profile.linkedin }}" target="_blank" class="social-link linkedin" title="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                            <span>LinkedIn</span>
+                        </a>
+                    {% endif %}
+                    {% if user.profile.tiktok %}
+                        <a href="https://tiktok.com/@{{ user.profile.tiktok }}" target="_blank" class="social-link tiktok" title="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                            <span>TikTok</span>
+                        </a>
+                    {% endif %}
+                    {% if user.profile.imo %}
+                        <a href="https://imo.im/{{ user.profile.imo }}" target="_blank" class="social-link imo" title="Imo">
+                            <i class="fas fa-comments"></i>
+                            <span>Imo</span>
+                        </a>
+                    {% endif %}
+                    {% if user.profile.email %}
+                        <a href="mailto:{{ user.profile.email }}" class="social-link email" title="Email">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email</span>
+                        </a>
+                    {% endif %}
+                    {% if not user.profile.telegram and not user.profile.facebook and not user.profile.instagram and not user.profile.linkedin and not user.profile.tiktok and not user.profile.imo and not user.profile.email %}
+                        <p class="no-socials">{% trans "No social media connected yet" %}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="profile-actions">
+                <a href="{% url 'profile_update' %}" class="action-btn btn-primary">
+                    <i class="fas fa-edit"></i> {% trans "Edit Profile" %}
+                </a>
+                <a href="/" class="action-btn btn-secondary">
+                    <i class="fas fa-home"></i> {% trans "Back to Home" %}
+                </a>
+            </div>
+        </div>
     </div>
-
-    <div class="profile-socials">
-    <h4>{% trans "Social Media" %}</h4>
-    <ul>
-        {% if user.profile.telegram %}
-            <li><a href="https://t.me/{{ user.profile.telegram }}" target="_blank">Telegram</a></li>
-        {% endif %}
-        {% if user.profile.facebook %}
-            <li><a href="https://facebook.com/{{ user.profile.facebook }}" target="_blank">Facebook</a></li>
-        {% endif %}
-        {% if user.profile.instagram %}
-            <li><a href="https://instagram.com/{{ user.profile.instagram }}" target="_blank">Instagram</a></li>
-        {% endif %}
-        {% if user.profile.linkedin %}
-            <li><a href="https://linkedin.com/in/{{ user.profile.linkedin }}" target="_blank">LinkedIn</a></li>
-        {% endif %}
-        {% if user.profile.imo %}
-            <li><a href="https://imo.im/{{ user.profile.imo }}" target="_blank">Imo</a></li>
-        {% endif %}
-        {% if user.profile.tiktok %}
-            <li><a href="https://tiktok.com/@{{ user.profile.tiktok }}" target="_blank">TikTok</a></li>
-        {% endif %}
-        {% if user.profile.email %}
-            <li><a href="mailto:{{ user.profile.email }}">{{ user.profile.email }}</a></li>
-        {% endif %}
-    </ul>
-</div>
-
-
 </div>
 {% endblock %}
 
