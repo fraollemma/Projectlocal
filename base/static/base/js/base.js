@@ -8,8 +8,113 @@ document.addEventListener('DOMContentLoaded', function() {
     initLanguagePopup();
     initMobileNavigation(); 
     initCategoryNavDropdowns();
-    initDropdowns(); 
+    initDropdowns();
+    initScrollEffects();
+    initPageAnimations();
 });
+
+/* =========================================
+   SCROLL EFFECTS & ANIMATIONS
+   ========================================= */
+
+function initScrollEffects() {
+    let ticking = false;
+    let lastScrollY = 0;
+    const header = document.querySelector('.header');
+
+    window.addEventListener('scroll', () => {
+        lastScrollY = window.scrollY;
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                if (header) {
+                    if (lastScrollY > 10) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                }
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    // Scroll-to-top button
+    addScrollToTopButton();
+}
+
+function addScrollToTopButton() {
+    const scrollBtn = document.createElement('button');
+    scrollBtn.id = 'scrollToTopBtn';
+    scrollBtn.setAttribute('aria-label', 'Scroll to top');
+    scrollBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    scrollBtn.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        font-size: 18px;
+        z-index: 999;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    `;
+
+    document.body.appendChild(scrollBtn);
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            scrollBtn.style.display = 'flex';
+            scrollBtn.style.animation = 'slideInUp 0.3s ease-out';
+        } else {
+            scrollBtn.style.display = 'none';
+        }
+    });
+
+    scrollBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    scrollBtn.addEventListener('mouseenter', () => {
+        scrollBtn.style.transform = 'translateY(-5px) scale(1.1)';
+        scrollBtn.style.boxShadow = '0 8px 25px rgba(37, 99, 235, 0.5)';
+    });
+
+    scrollBtn.addEventListener('mouseleave', () => {
+        scrollBtn.style.transform = 'translateY(0) scale(1)';
+        scrollBtn.style.boxShadow = '0 4px 15px rgba(37, 99, 235, 0.4)';
+    });
+}
+
+function initPageAnimations() {
+    // Animate elements on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animation = 'fadeIn 0.6s ease-out forwards';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements with data-animate attribute
+    document.querySelectorAll('[data-animate]').forEach(el => {
+        observer.observe(el);
+    });
+}
 
 function initClock() { 
     updateClock();
@@ -106,21 +211,57 @@ function initFormSubmissions() {
             if (submitBtn) {
                 submitBtn.disabled = true;
                 submitBtn.classList.add('loading');
+                submitBtn.style.opacity = '0.7';
                 
                 const originalText = submitBtn.innerHTML;
+                const originalContent = submitBtn.textContent;
                 submitBtn.innerHTML = `
-                    <span class="spinner">
+                    <span class="spinner" style="display: inline-block; animation: spin 1s linear infinite; margin-right: 8px;">
                         <i class="fas fa-spinner fa-spin"></i>
                     </span>
-                    <span class="text">...</span>
+                    <span class="text">Processing...</span>
                 `;
+                
                 if (form.dataset.ajax === "true") {
                     e.preventDefault();
                     handleAjaxForm(form, submitBtn, originalText);
                 }
             }
         });
+
+        // Add real-time validation feedback
+        const inputs = form.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                validateField(input);
+            });
+            
+            input.addEventListener('focus', () => {
+                input.classList.remove('error');
+            });
+        });
     });
+}
+
+function validateField(field) {
+    let isValid = true;
+    
+    if (field.hasAttribute('required') && !field.value.trim()) {
+        isValid = false;
+    }
+    
+    if (field.type === 'email' && field.value) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        isValid = emailRegex.test(field.value);
+    }
+    
+    if (!isValid) {
+        field.classList.add('error');
+        field.style.borderColor = '#ef4444';
+    } else {
+        field.classList.remove('error');
+        field.style.borderColor = '';
+    }
 }
 
 function handleAjaxForm(form, submitBtn, originalText) {
@@ -154,16 +295,46 @@ function handleAjaxForm(form, submitBtn, originalText) {
 }
 
 function initButtonEffects() {
-    const buttons = document.querySelectorAll('.btn');
+    const buttons = document.querySelectorAll('.btn, button:not(.scroll-btn)');
     buttons.forEach(button => {
-        button.addEventListener('mousedown', () => {
-            button.style.transform = 'translateY(1px) scale(0.98)';
+        // Add ripple effect
+        button.addEventListener('click', (e) => {
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            ripple.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                background: rgba(255, 255, 255, 0.5);
+                border-radius: 50%;
+                left: ${x}px;
+                top: ${y}px;
+                pointer-events: none;
+                animation: ripple-animation 0.6s ease-out;
+            `;
+
+            if (!button.style.position || button.style.position === 'static') {
+                button.style.position = 'relative';
+                button.style.overflow = 'hidden';
+            }
+
+            button.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
         });
-        
+
+        // Add press animation
+        button.addEventListener('mousedown', () => {
+            button.style.transform = 'translateY(2px) scale(0.98)';
+        });
+
         button.addEventListener('mouseup', () => {
             button.style.transform = 'translateY(0) scale(1)';
         });
-        
+
         button.addEventListener('mouseleave', () => {
             button.style.transform = 'translateY(0) scale(1)';
         });
@@ -222,22 +393,32 @@ function initMobileNavigation() {
     }
     
     function toggleCategoryNav() {
-        categoryNav.classList.toggle('active');
-        navOverlay.classList.toggle('active');
-        document.body.classList.toggle('no-scroll');
+        const isActive = categoryNav.classList.contains('active');
         
-        const icon = navToggle.querySelector('i');
-        const isExpanded = categoryNav.classList.contains('active');
-        if (icon) {
-            icon.className = isExpanded ? 'fas fa-times' : 'fas fa-bars';
-        }
-        
-        navToggle.setAttribute('aria-expanded', isExpanded);
-        
-        if (isExpanded) {
-            navToggle.querySelector('.nav-toggle-icon').innerHTML = '<i class="fas fa-times"></i>';
+        if (!isActive) {
+            // Opening
+            categoryNav.classList.add('active');
+            navOverlay.classList.add('active');
+            document.body.classList.add('no-scroll');
+            categoryNav.style.animation = 'slideInLeft 0.4s ease-out';
+            
+            if (navToggle) {
+                navToggle.setAttribute('aria-expanded', 'true');
+                navToggle.querySelector('.nav-toggle-icon').innerHTML = '<i class="fas fa-times"></i>';
+                navToggle.style.transform = 'rotate(90deg)';
+            }
         } else {
-            navToggle.querySelector('.nav-toggle-icon').innerHTML = '<i class="fas fa-bars"></i>';
+            // Closing
+            categoryNav.classList.remove('active');
+            navOverlay.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+            categoryNav.style.animation = 'slideOutLeft 0.4s ease-out';
+            
+            if (navToggle) {
+                navToggle.setAttribute('aria-expanded', 'false');
+                navToggle.querySelector('.nav-toggle-icon').innerHTML = '<i class="fas fa-bars"></i>';
+                navToggle.style.transform = 'rotate(0deg)';
+            }
         }
     }
     
@@ -259,6 +440,7 @@ function initMobileNavigation() {
                 navToggle.setAttribute('aria-expanded', 'false');
                 const icon = navToggle.querySelector('.nav-toggle-icon');
                 if (icon) icon.innerHTML = '<i class="fas fa-bars"></i>';
+                navToggle.style.transform = 'rotate(0deg)';
             }
         });
     }
@@ -270,6 +452,7 @@ function initMobileNavigation() {
         if (navToggle) {
             navToggle.setAttribute('aria-expanded', 'false');
             navToggle.querySelector('.nav-toggle-icon').innerHTML = '<i class="fas fa-bars"></i>';
+            navToggle.style.transform = 'rotate(0deg)';
         }
     });
     
@@ -281,6 +464,7 @@ function initMobileNavigation() {
             if (navToggle) {
                 navToggle.setAttribute('aria-expanded', 'false');
                 navToggle.querySelector('.nav-toggle-icon').innerHTML = '<i class="fas fa-bars"></i>';
+                navToggle.style.transform = 'rotate(0deg)';
             }
         }
     });
@@ -294,6 +478,7 @@ function initMobileNavigation() {
             if (navToggle) {
                 navToggle.setAttribute('aria-expanded', 'false');
                 navToggle.querySelector('.nav-toggle-icon').innerHTML = '<i class="fas fa-bars"></i>';
+                navToggle.style.transform = 'rotate(0deg)';
             }
         });
     });
@@ -310,8 +495,9 @@ function initDropdowns() {
         toggle.addEventListener("click", function (e) {
             e.stopPropagation();
 
+            // Close other dropdowns with animation
             dropdowns.forEach(d => {
-                if (d !== dropdown) {
+                if (d !== dropdown && d.classList.contains('open')) {
                     d.classList.remove("open");
                     const btn = d.querySelector(".dropdown-toggle");
                     if (btn) btn.setAttribute("aria-expanded", "false");
@@ -320,15 +506,44 @@ function initDropdowns() {
 
             const isOpen = dropdown.classList.toggle("open");
             toggle.setAttribute("aria-expanded", isOpen);
+            
+            if (isOpen) {
+                toggle.style.transform = 'rotate(180deg)';
+            } else {
+                toggle.style.transform = 'rotate(0deg)';
+            }
         });
     });
 
-    document.addEventListener("click", function () {
-        dropdowns.forEach(d => {
-            d.classList.remove("open");
-            const btn = d.querySelector(".dropdown-toggle");
-            if (btn) btn.setAttribute("aria-expanded", "false");
-        });
+    // Close dropdowns on document click
+    document.addEventListener("click", function (e) {
+        // Don't close if clicking inside a dropdown
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(d => {
+                if (d.classList.contains('open')) {
+                    d.classList.remove("open");
+                    const btn = d.querySelector(".dropdown-toggle");
+                    if (btn) {
+                        btn.setAttribute("aria-expanded", "false");
+                        btn.style.transform = 'rotate(0deg)';
+                    }
+                }
+            });
+        }
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            dropdowns.forEach(d => {
+                d.classList.remove("open");
+                const btn = d.querySelector(".dropdown-toggle");
+                if (btn) {
+                    btn.setAttribute("aria-expanded", "false");
+                    btn.style.transform = 'rotate(0deg)';
+                }
+            });
+        }
     });
 }
 
@@ -414,29 +629,56 @@ function showToast(title, message, type = 'info') {
     toast.innerHTML = `
         <div class="toast-header">
             <strong>${title}</strong>
-            <button class="toast-close">&times;</button>
+            <button class="toast-close" aria-label="Close notification">&times;</button>
         </div>
         <div class="toast-body">${message}</div>
     `;
     
     document.body.appendChild(toast);
     
+    // Add inline keyframes for ripple animation
+    if (!document.getElementById('ripple-style')) {
+        const style = document.createElement('style');
+        style.id = 'ripple-style';
+        style.textContent = `
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Trigger animation
     setTimeout(() => {
         toast.classList.add('show');
     }, 10);
     
-    setTimeout(() => {
-        toast.classList.remove('show');
+    // Auto-close animation
+    const timeoutId = setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%) scale(0.9)';
         setTimeout(() => {
             toast.remove();
         }, 300);
     }, 5000);
     
-    toast.querySelector('.toast-close').addEventListener('click', () => {
-        toast.classList.remove('show');
+    // Close button functionality
+    const closeBtn = toast.querySelector('.toast-close');
+    closeBtn.addEventListener('click', () => {
+        clearTimeout(timeoutId);
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%) scale(0.9)';
         setTimeout(() => {
             toast.remove();
         }, 300);
+    });
+    
+    // Pause auto-close on hover
+    toast.addEventListener('mouseenter', () => {
+        clearTimeout(timeoutId);
     });
 }
 

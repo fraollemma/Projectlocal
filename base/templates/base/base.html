@@ -164,7 +164,7 @@
             {% if user.is_authenticated %}
             <div class="action-item dropdown">
                 <button class="action-btn user-btn dropdown-toggle">
-                    <img src="{{ user.profile.profile_picture.url }}" class="profile-picture">
+                    <img src="{{ user.profile.profile_picture.url }}" class="user-profile-picture">
                 </button>
                 <div class="dropdown-menu">
                     <a href="{% url 'users:profile' %}">{% trans "Profile" %}</a>
