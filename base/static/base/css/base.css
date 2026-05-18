@@ -366,8 +366,6 @@ img {
 }
 
 .action-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: #fbbf24;
     transform: scale(1.1);
 }
 
@@ -381,7 +379,7 @@ img {
     height: clamp(32px, 8vw, 40px);
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgb(255, 255, 255);
     transition: all var(--transition);
 }
 
@@ -407,6 +405,7 @@ img {
     box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
     animation: pulse 2s ease-in-out infinite;
     transition: all var(--transition);
+    z-index: 10000000000;
 }
 
 /* Dropdowns */
@@ -568,7 +567,6 @@ img {
 
 .login-btn, .user-btn {
     padding: var(--spacing-xs) var(--spacing-sm);
-    border: 1px solid var(--primary-color);
     border-radius: var(--border-radius);
     color: var(--primary-color);
     font-weight: 500;
@@ -578,10 +576,6 @@ img {
     gap: var(--spacing-xs);
 }
 
-.login-btn:hover, .user-btn:hover {
-    background-color: var(--primary-color);
-    color: white;
-}
 
 .nav-toggle {
     background: none;
@@ -1928,4 +1922,3 @@ textarea:focus-visible {
 @keyframes ripple-animation {
     to { transform: scale(4); opacity: 0; }
 }
-

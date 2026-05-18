@@ -337,13 +337,10 @@
             position: absolute;
             width: ${size}px;
             height: ${size}px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
             left: ${x}px;
             top: ${y}px;
             pointer-events: none;
             transform: scale(0);
-            animation: ripple-animation 0.5s linear;
         `;
         button.appendChild(ripple);
         ripple.addEventListener('animationend', () => ripple.remove());
@@ -510,7 +507,7 @@
                 });
                 const isOpen = dropdown.classList.toggle("open");
                 toggle.setAttribute("aria-expanded", isOpen);
-                toggle.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+                toggle.style.transform = isOpen ? 'rotate(8deg)' : 'rotate(0deg)';
             });
         });
 
